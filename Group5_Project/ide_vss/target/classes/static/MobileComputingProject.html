@@ -1,0 +1,211 @@
+
+<!DOCTYPE html PUBLIC>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" href="css/styles.css">
+  <title>VSS Application IDE</title>
+</head>
+<body onload="onLoadFunc()">
+<div class="main_page">
+  <div class="content_section floating_element">
+    <div class="section_header">
+      <div id = "ssInfo">
+        VSS Dashboard
+        <p style = "font-size: 30%">Smart Space ID: MySmartSpace</p>
+        <p style = "font-size: 30%">Smart Space Name: This Is The Name</p>
+        <p style = "font-size: 30%">Smart Space Location: Century Tower</p>
+        <p style = "font-size: 30%">Smart Space Description: Here is a short description of the space function </p>
+      </div>
+    </div>
+    <div class="tab">
+      <button class="tablinks" onclick="openTab(event, 'Things')" id="defaultOpen">Things</button>
+      <button class="tablinks" onclick="openTab(event, 'Services')">Services</button>
+      <button class="tablinks" onclick="openTab(event, 'Relationships')">Relationships</button>
+      <button class="tablinks" onclick="openTab(event, 'Apps')">Apps</button>
+      <button class="tablinks" onclick="openTab(event, 'Recipe')" ondrop="drop2(event)" ondragover="allowDrop(event)">Recipe</button>
+    </div>
+
+    <!-- Tab content -->
+    <div id="Things" class="tabcontent">
+      <h1>Things</h1>
+    </div>
+
+    <div id="Services" class="tabcontent">
+      <h1>Services</h1>
+      <form action="/action_page.php" onchange="filterServ()">
+        <text style = "font-size: 100%">Select service owners:</text>
+        <input type="checkbox" id="Ziwei04Serv" name="Ziwei04" checked>
+        <label for="rPi1">Ziwei04</label>
+        <input type="checkbox" id="Haocheng01Serv" name="Haocheng01" checked>
+        <label for="rPi2">Haocheng01</label>
+        <input type="checkbox" id="Andrew02Serv" name="Andrew02" checked>
+        <label for="rPi3">Andrew02</label>
+        <input type="checkbox" id="Qihao03Serv" name="Qihao03" checked>
+        <label for="rPi3">Qihao03</label>
+      </form>
+    </div>
+
+    <div id="Relationships" class="tabcontent">
+      <h1>Relationships</h1>
+      <form action="/action_page.php" onchange="filterRel()">
+        <text style = "font-size: 100%">Select relationship establishers:</text>
+        <input type="checkbox" id="Ziwei04Rel" name="Ziwei04" checked>
+        <label for="rPi1">Ziwei04</label>
+        <input type="checkbox" id="Haocheng01Rel" name="Haocheng01"checked>
+        <label for="rPi2">Haocheng01</label>
+        <input type="checkbox" id="Andrew02Rel" name="Andrew02" checked>
+        <label for="rPi3">Andrew02</label>
+        <input type="checkbox" id="Qihao03Rel" name="Qihao03" checked>
+        <label for="rPi3">Qihao03</label>
+      </form>
+    </div>
+    <div id="Apps" class="tabcontent">
+      <h1>Apps</h1>
+      <p>&nbsp;</p>
+      <button data-buttonText = "Please work" onclick="document.getElementById('ctrl').click()" style = "font-size: 150%;"> Upload App </button>
+      <input type="file" style="display:none" id="ctrl"></input>
+      <form onsubmit="newWDSubmit()">
+        <label for="newPath">New Working Directory:</label>
+        <input type="text" id="newWD" name="newPath">
+        <input type="submit" value="Submit" >
+      </form>
+      <p>&nbsp;</p>
+      <p></p>
+      <!-- The Modal -->
+      <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2 id="modalHeader">Modal Header</h2>
+          </div>
+          <div class="modal-body"><p>&nbsp;</p> <p></p>
+            <button class = 'app-menu-button' onclick="saveApp()">Save</button><p></p>
+            <button class = 'app-menu-button' onclick="activateApp()">Activate</button><p></p>
+            <button class = 'app-menu-button' onclick="stopApp()">Stop</button><p></p>
+            <button class = 'app-menu-button' onclick="deleteApp()">Delete</button><p>&nbsp;</p> <p></p>
+            <div id = 'appHistoryTracker'></div>
+          </div>
+        </div>
+
+      </div>
+      <p></p>
+      <div class='parent'>
+        <div id = appMenu class='app-menu'>
+          <h1>Avalable Apps</h1>
+          <p>&nbsp;</p>
+          <p></p>
+        </div>
+        <div id = 'statusMenu' class='status-pannel'>
+          <h1>App Status Pannel</h1>
+          <p>&nbsp;</p>
+          <p></p>
+        </div>
+      </div>
+    </div>
+    <div id="Recipe" class="tabcontent">
+      <h1>Recipe</h1>
+      <div class='parent'>
+        <div id = serviceMenu class='app-menu'>
+          <h1>Services</h1>
+          <p>&nbsp;</p>
+          <p></p>
+
+        </div>
+        <div id = 'statusMenuContainer' class='status-pannel'>
+          <h1>App Builder</h1>
+          <label for="newPath">App Name:</label>
+          <input type="text" id = "appNameInput" name="newPath">
+          <div id = 'dragNDropper'  style = "padding-bottom: 20px; border: 1px solid #222222; padding-top: 20px;" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+          </div>
+          <button id = 'condAdd' style = "width: 100%;" onclick = "addConditional()" >Add Conditional</button>
+          <button id = 'clearRecipe' style = "width: 100%;" onclick = "clearRecipe()" >clear Recipe</button>
+          <button id = 'saveRecipe' style = "width: 100%;" onclick = "saveRecipe()" >save Recipe</button>
+          <p></p>
+        </div>
+      </div>
+      <script id = "thingTemplate" type = "text/html">
+        <p>&nbsp;</p>
+        <p></p>
+        <div name = "singleThing" class="thingContainer">
+          <text style = "font-size: 150%">Thing Name: </text>
+          <text class = "name" style = "font-size: 150%">Example Thing</text>
+          <p></p>
+          <text style = "font-size: 150%">Thing ID: </text>
+          <text class = "id" style = "font-size: 150%">Example Thing</text>
+          <p></p>
+          <text style = "font-size: 150%">Owner: </text>
+          <text class = "owner" style = "font-size: 150%">Example Thing</text>
+          <p></p>
+          <text style = "font-size: 150%">Vendor: </text>
+          <text class = "vendor" style = "font-size: 150%">Example Thing</text>
+          <p></p>
+          <text style = "font-size: 150%">Model: </text>
+          <text class = "model" style = "font-size: 150%">Example Thing</text>
+          <p></p>
+          <text style = "font-size: 150%">Release Date: </text>
+          <text class = "release" style = "font-size: 150%">Example Thing</text>
+          <p></p>
+          <text style = "font-size: 150%">Type: </text>
+          <text class = "type" style = "font-size: 150%">Example Thing</text>
+          <p></p>
+          <text style = "font-size: 150%">Operating System: </text>
+          <text class = "OS" style = "font-size: 150%">Example Thing</text>
+          <p></p>
+          <text style = "font-size: 150%">Description: </text>
+          <p></p>
+          <text class = "description" style = "font-size: 100%">Example Thing description could go on for quite some time</text>
+          <p></p>
+          <text style = "font-size: 150%">Comments: </text>
+          <p></p>
+          <text class = "comments" style = "font-size: 100%">The comments about the thing could be quite lengthy too, which is why I have put them on a new line. Will this break it?</text>
+        </div>
+      </script>
+      <script id = "serviceTemplate" type = "text/html">
+        <p>&nbsp;</p>
+        <p></p>
+        <div name = "singleService" class="thingContainer" >
+          <text style = "font-size: 150%">Service Name: </text>
+          <text class = "name" name = "" style = "font-size: 150%">Example Thing</text>
+          <p></p>
+          <text style = "font-size: 150%">Owner Thing: </text>
+          <text class = "owner" style = "font-size: 150%">Example Thing</text>
+          <p></p>
+          <text style = "font-size: 150%">Category: </text>
+          <text class = "category" style = "font-size: 150%">Example Thing</text>
+          <p></p>
+          <text style = "font-size: 150%">Type: </text>
+          <text class = "type" style = "font-size: 150%">Example Thing</text>
+          <p></p>
+          <text style = "font-size: 150%">Keywords: </text>
+          <text class = "keywords" style = "font-size: 150%">Example Thing</text>
+          <p></p>
+          <text style = "font-size: 150%">Description: </text>
+          <p></p>
+          <text class = "description" style = "font-size: 100%">The comments about the thing could be quite lengthy too, which is why I have put them on a new line. Will this break it?</text>
+        </div>
+      </script>
+      <script id = "relationshipTemplate" type = "text/html">
+        <p>&nbsp;</p>
+        <p></p>
+        <div name = "singleRelationship" class="thingContainer">
+          <text style = "font-size: 150%">Name: </text>
+          <text class = "name" style = "font-size: 150%">Example Name</text>
+          <p></p>
+          <text style = "font-size: 150%">Establisher: </text>
+          <text class = "establisher" style = "font-size: 150%">Example Establisher</text>
+          <p></p>
+          <text style = "font-size: 150%">Description: </text>
+          <p></p>
+          <text class = "description" style = "font-size: 100%">The comments about the thing could be quite lengthy too, which is why I have put them on a new line. Will this break it?</text>
+        </div>
+      </script>
+      <script src = "js/renderScripts1.js"></script>
+    </div>
+  </div>
+</body>
+</html>
+
